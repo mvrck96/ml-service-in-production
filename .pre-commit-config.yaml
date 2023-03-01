@@ -1,0 +1,36 @@
+repos:
+  - repo: https://github.com/psf/black
+    rev: 20.8b1
+    hooks:
+      - id: black
+        args: ["--config=pyproject.toml"]
+        additional_dependencies: ["click==8.0.4"]
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.0.1
+    hooks:
+      # Проверка корректности имен тестов
+      # - id: name-tests-test
+      # проверяет наличие переноса строки в конце всех текстовых файлов
+      - id: end-of-file-fixer
+      # предупреждает о добавлении больших файлов в Git
+      - id: check-added-large-files
+      # предупреждает о сохранении файлов с UTF-8 BOM
+      - id: fix-byte-order-marker
+      # предотвращает сохранение приватных ключей
+      - id: detect-private-key
+      # убивает пробелы в конце строки
+      - id: trailing-whitespace
+      # проверяет на предмет расположения docstring после кода
+      - id: check-docstring-first
+      # проверяет файлы на предмет конфликтующих строк при операции слияния
+      - id: check-merge-conflict
+      - id: check-yaml
+      - id: check-toml
+      - id: check-json
+
+  - repo: https://github.com/pycqa/flake8
+    rev: 3.8.4
+    hooks:
+      - id: flake8
+        additional_dependencies: [flake8-docstrings]
