@@ -28,7 +28,7 @@ def update_system_metrics() -> None:
 def expose_endpoint(app: FastAPI) -> None:
     """Expose endpoint metric for sharing."""
 
-    @app.get("/metrics")
+    @app.get("/metrics", tags=["observability"])
     def metrics() -> Response:
         return Response(generate_latest())
 
