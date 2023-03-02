@@ -34,12 +34,12 @@ tc = TraceClient(
 state.set_ready_status(True)
 
 
-@app.get("/test")
+@app.get("/test", tags=["dummy ML stuff"])
 def foo():
     return 1
 
 
-@app.get("/health/liveness")
+@app.get("/health/liveness", tags=["observability"])
 def liveness(response: Response):
     """Liveness probe endpoint."""
     _status = state.get_live_status()
@@ -50,7 +50,7 @@ def liveness(response: Response):
     return {"liveness": _status}
 
 
-@app.get("/health/readiness")
+@app.get("/health/readiness", tags=["observability"])
 def readiness(response: Response):
     """Readiness probe endpoint."""
     _status = state.get_ready_status()
@@ -61,7 +61,7 @@ def readiness(response: Response):
     return {"readiness": _status}
 
 
-@app.get("/")
+@app.get("/", tags=["redirect"])
 def redirect_docs():
     """Redirect on SwaggerUI."""
     logger.info("Request to docs.")
@@ -70,7 +70,7 @@ def redirect_docs():
 
 @app.on_event("shutdown")
 def on_shutdown():
-    """State managment on shutdown."""
+    """State management on shutdown."""
     state.set_ready_status(False)
     state.set_live_status(False)
     logger.info("Service shuted down !")
