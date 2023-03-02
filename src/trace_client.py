@@ -17,7 +17,7 @@ TraceContext = namedtuple("TraceContext", ["trace_id", "span_id"])
 
 
 def get_trace_context(trace: TraceClient) -> TraceContext:
-    """Retrives span constext."""
+    """Retrieves span context."""
     context = TraceContext(
         trace_id=trace.context.trace_id, span_id=trace.context.span_id
     )
