@@ -21,3 +21,6 @@ from main import app, settings
 def mock_client():
     settings.jaeger_enabled = True
     return TestClient(app)
+
+
+probe_names = ["liveness", "readiness"]
