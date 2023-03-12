@@ -42,8 +42,11 @@ def predict(req: PredictRequest) -> PredictResponse:
     @param req[PredictRequest]: incoming request
     @return [PredictResponse]: resulting response
     """
-    res = predict_ts(data=req.data, smoothing_level=req.smoothing_level)
-    return PredictResponse(feature=req.feature, predicted_value=res)
+    with tc("predict") as main:
+        main_ctx = get_trace_context(main)
+        res = predict_ts(data=req.data, smoothing_level=req.smoothing_level)
+        with tc("assemble_response", parent_context=main_ctx):
+            return PredictResponse(feature=req.feature, predicted_value=res)
 
 
 @app.get("/health/liveness", tags=["observability"])
