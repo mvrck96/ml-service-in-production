@@ -7,7 +7,8 @@ from src.metrics import setup_middleware
 from src.logger import create_logger
 from src.settings import get_settings
 from src.state import State
-
+from src.data_models import PredictRequest, PredictResponse
+from src.forecast import predict as predict_ts
 
 state = State()
 settings = get_settings()
@@ -34,9 +35,15 @@ tc = TraceClient(
 state.set_ready_status(True)
 
 
-@app.get("/test", tags=["dummy ML stuff"])
-def foo():
-    return 1
+@app.post("/predict", tags=["dummy ML stuff"])
+def predict(req: PredictRequest) -> PredictResponse:
+    """Predict next time series value.
+
+    @param req[PredictRequest]: incoming request
+    @return [PredictResponse]: resulting response
+    """
+    res = predict_ts(data=req.data, smoothing_level=req.smoothing_level)
+    return PredictResponse(feature=req.feature, predicted_value=res)
 
 
 @app.get("/health/liveness", tags=["observability"])
