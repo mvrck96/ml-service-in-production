@@ -34,8 +34,10 @@
 Для запуска контейнера с сервисом и всей инфраструктурой:
 1. `git clone <repo address>`
 2. `cd ml-service-in-production`
-3. `docker-compose up --build` -- запуск контейнера
-4. Адреса:
+3. `cp template.env .env` -- создать копию файла template.env с именем .env
+4. Изменить при необходимости переменные окружения
+5. `docker-compose up --build` -- запуск контейнера
+6. Адреса:
     - Сервис -- http://localhost:8000/docs
     - Prometheus -- http://localhost:9090/
     - Jaeger -- http://localhost:16686/
@@ -46,6 +48,8 @@
 3. `python3 -m venv venv` -- подготовка виртуального окружения
 4. `source venv/bin/activate` -- активация окружения
 5. `pip install -r requirements.txt` -- установка зависимостей
+6. `cp template.env .env` -- создать копию файла template.env с именем .env
+7. Изменить при необходимости переменные окружения
 6. `uvicorn main:app` -- запуск сервиса
 
 Для запуска тестов:
